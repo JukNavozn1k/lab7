@@ -1,4 +1,5 @@
-uses    wincrt, crt, math, graph;
+program main;
+uses    wincrt, crt, math, graph,frac;
 const 
         unsel=LightGray;
         sel=Green;
@@ -56,7 +57,6 @@ begin
         write('Нажмите клавишу <Enter> для выходв в главное меню ');
         readln;
 end;
-
 
 
 procedure IntGraph;
