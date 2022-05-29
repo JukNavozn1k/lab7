@@ -1,4 +1,5 @@
-uses    wincrt, crt, math, graph;
+program main;
+uses    wincrt, crt, math, graph,frac;
 const 
         unsel=LightGray;
         sel=Green;
