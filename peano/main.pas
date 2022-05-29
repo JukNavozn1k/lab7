@@ -59,7 +59,6 @@ begin
 end;
 
 
-
 procedure IntGraph;
 
 begin
