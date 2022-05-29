@@ -13,7 +13,7 @@ var     menu:array[1..n] of string;
 procedure point1; 
 var x,y : integer;
 begin
-            
+                
                 clrscr;
                 x := 10;
                 y := 5;
