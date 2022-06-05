@@ -3,51 +3,17 @@ uses    wincrt, crt, math, graph,frac;
 const 
         unsel=LightGray;
         sel=Green;
-        n=4;
+        n=3;
 var     menu:array[1..n] of string;
-        point,x,y,i,gd,gm,depth,scale: integer;
-        ch,winch,tmpW: char; 
-       
-        flag,check,isGood: boolean;
-       
-
-procedure point1; 
-var x,y : integer;
-begin
-                
-                clrscr;
-                x := 10;
-                y := 5;
-                depth := 0;
-                scale := 0;
-                gotoxy(x,y);
-                write('Ввод данных: ');
-                y := y + 1;
-                gotoxy(x,y);
-                while depth <= 0 do begin
-                    write('Введите глубину прорисовки (depth > 0): ');
-                    
-                    read(depth);
-                    y := y + 1;
-                    gotoxy(x,y);
-                    
-                end;
-                y := y + 1;
-                gotoxy(x,y);
-                while scale <= 0 do begin
-                    write('Введите масштаб прорисовки (scale > 0): ');
-                    
-                    read(scale);
-                    y := y + 1;
-                    gotoxy(10,y);
-                    
-                end;
-                flag:=true;
-end;
+        point,x,y,i,gd,gm: integer;
+        ch,winch: char; 
 
 
 
-procedure point3; // Вывод информации о программе (удивительно)
+
+
+
+procedure Info; // Вывод информации о программе (удивительно)
 
 begin
         clrscr;
@@ -62,10 +28,9 @@ end;
 procedure IntGraph;
 
 begin
-       
-        if flag=false then point1; 
-       
-        isGood := true;
+
+        CoordX := GetMaxX div 2;
+        CoordY := GetMaxY div 2;
         gd:=detect;gm:=0;InitGraph(gd, gm, '');
         // ---------------
        
@@ -91,10 +56,11 @@ begin
 end;
 
 begin
-        menu[1]:='Ввод данных';
-        menu[2]:='Посмотреть фрактал';
-        menu[3]:='О программе';
-        menu[4]:='Выход';
+        
+        menu[1]:='Посмотреть фрактал';
+        menu[2]:='О программе';
+        menu[3]:='Выход';
+        
         point:=1;
         x:=10;
         y:=5;
@@ -134,10 +100,10 @@ begin
                         if ch=#13 then
                         begin
                                 case point of
-                                1: point1;
-                                2: IntGraph;
-                                3: point3;
-                                4: ch:=#27;
+                                1: IntGraph;
+                                2: info;
+                                3: ch:=#27;
+                               
                             
                         end;
                 printmenu;
