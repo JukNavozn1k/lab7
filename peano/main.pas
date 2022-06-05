@@ -29,7 +29,8 @@ procedure IntGraph;
 
 begin
 
-       
+        CoordX := GetMaxX div 2;
+        CoordY := GetMaxY div 2;
         gd:=detect;gm:=0;InitGraph(gd, gm, '');
         // ---------------
        
@@ -55,6 +56,7 @@ begin
 end;
 
 begin
+        
         menu[1]:='Посмотреть фрактал';
         menu[2]:='О программе';
         menu[3]:='Выход';
