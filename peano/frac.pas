@@ -21,7 +21,7 @@ procedure IntFrac;
 
 implementation
 var x,y : integer;
-    p : ptr;
+    p,sp : ptr; // указатель и стартовая позиция, откуда начинает рисоваться фрактал
 procedure addNew(var current : ptr);
 var next: ptr;
 begin
@@ -33,11 +33,13 @@ begin
 end;
 procedure IntFrac;
 begin
-    new(p);
+    new(p); // создание нового объекта, который находится по адрессу p
+    sp := p; // копирование стартовой позиции для извлечения значений
     x := CoordX;
     y := CoordY;
     p^.CoordX := x;
     p^.CoordY := y;
+    
 end;
 
 // Рекурсивная функция, выщитывающая точки
