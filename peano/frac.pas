@@ -14,14 +14,13 @@ var
 
 // Добавляет следующую точку и ставит на неё указатель
 procedure addNew(var current: ptr);
-
-
+procedure getPtr; // получить следующую точку,нужную для отрисовки
 // Процедура инициализации фрактала, в данных точках CoordX,CoordY
 procedure IntFrac;
-
+procedure calcDot;
 implementation
 var x,y : integer;
-    p,sp : ptr; // указатель и стартовая позиция, откуда начинает рисоваться фрактал
+    p,sp,tmp : ptr; // указатель и стартовая позиция, откуда начинает рисоваться фрактал
 procedure addNew(var current : ptr);
 var next: ptr;
 begin
@@ -35,40 +34,52 @@ procedure IntFrac;
 begin
     new(p); // создание нового объекта, который находится по адрессу p
     sp := p; // копирование стартовой позиции для извлечения значений
+    tmp := sp;
     x := CoordX;
     y := CoordY;
     p^.CoordX := x;
     p^.CoordY := y;
+    n := 0; Scale := 1;
     
 end;
 
 // Рекурсивная функция, выщитывающая точки
-procedure calcDot(var x,y:integer);
+procedure calcDot;
 begin
+// Спасибо паша - помог
 case n of 
 0: begin 
-x := x;
-y := y - Scale;
+x := x ;
+y := y - 50*Scale ;
 end;
 1: begin 
-x := x + Scale;
-y := y;
+x := x + 25*Scale  ;
+y := y ; 
 end;
 2: begin 
-x := x;
-y := y + Scale;
+x := x ;
+y := y + 50*Scale;
 end;
 3: begin 
-x := x + Scale;
+x := x + 25*Scale;
 y := y;
 end;
 4: begin 
 x := x;
-y := y - Scale;
+y := y - 50*Scale;
 end;
 end;
 n := n + 1;
+if n > 4 then n := 0;  
+
 addNew(p);
-if n > 4 then n := 0;
+
+end;
+procedure getPtr;
+var i : integer;
+begin
+    CoordX := tmp^.CoordX; CoordY := tmp^.CoordY;
+    tmp := tmp^.Link;
+  
 end;
 end.

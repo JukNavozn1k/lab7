@@ -11,8 +11,6 @@ var     menu:array[1..n] of string;
 
 
 
-
-
 procedure Info; // Вывод информации о программе (удивительно)
 
 begin
@@ -24,7 +22,21 @@ begin
         readln;
 end;
 
+procedure graph;
+var i : integer;
+begin
+MoveTo(CoordX,CoordY); // перемещает курсор в центр экрана, очень полезная вещь
+{LineRel(0,250); // Движет линию на какой-то вектор, относительно предыдущей позиции
+LineRel(-250,0); }
+for i := 1 to 100 do  calcDot;
+getPtr; 
+// ===============================
+getPtr;
+LineTo(CoordX,CoordY);
 
+
+readln();
+end;
 procedure IntGraph;
 
 begin
@@ -35,6 +47,7 @@ begin
         CoordX := GetMaxX div 2;
         CoordY := GetMaxY div 2;
         IntFrac;
+        graph;
         
        
        
