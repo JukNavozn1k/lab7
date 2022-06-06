@@ -9,26 +9,59 @@ type
         Link : ptr;
     end;
 var 
-    CoordX,CoordY: integer;
-    Depth : byte;
-// Добавляет следующую точку и ставит на неё указатель
-procedure addNew(var p: ptr);
-procedure calcDot();
+    CoordX,CoordY,n: integer; // Координаты какой-то начальной точки
+    Depth : byte; // Глубина отрисовки
 
+// Добавляет следующую точку и ставит на неё указатель
+procedure addNew(var current: ptr);
+
+
+// Процедура инициализации фрактала, в данных точках CoordX,CoordY
+procedure IntFrac;
 
 implementation
 var x,y : integer;
-procedure addNew(var p : ptr);
-var y: ptr;
+    p : ptr;
+procedure addNew(var current : ptr);
+var next: ptr;
 begin
-    new(y);
-    // Сделать ввод координат через отдельную функцию,вычисляющую точки фрактала
-    y^.CoordX := 0;
-    y^.CoordY := 0;
-    p^.Link := y;
-    p := y;
+    new(next);
+    next^.CoordX := x;
+    next^.CoordY := y;
+    current^.Link := next;
+    current := next;
 end;
-procedure calcDot();
+procedure IntFrac;
 begin
+    new(p);
+    x := CoordX;
+    y := CoordY;
+    p^.CoordX := x;
+    p^.CoordY := y;
+end;
+
+// Рекурсивная функция, выщитывающая точки
+procedure calcDot(var x,y:integer);
+begin
+case n of 
+0: begin 
+x := x;
+y := y - 50;
+end;
+1: begin 
+x := x + 25;
+end;
+2: begin 
+x := x;
+y := y + 50;
+end;
+3: begin 
+x := x + 25;
+end;
+4: begin 
+x := x;
+y := y - 50;
+end;
+end;
 end;
 end.
