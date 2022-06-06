@@ -29,10 +29,13 @@ procedure IntGraph;
 
 begin
 
+        
+        gd:=detect;gm:=0;
+        InitGraph(gd, gm, '');
         CoordX := GetMaxX div 2;
         CoordY := GetMaxY div 2;
-        gd:=detect;gm:=0;InitGraph(gd, gm, '');
-        // ---------------
+        IntFrac;
+        
        
        
 end;
