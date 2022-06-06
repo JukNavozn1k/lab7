@@ -46,21 +46,23 @@ begin
 case n of 
 0: begin 
 x := x;
-y := y - 50;
+y := y - Scale;
 end;
 1: begin 
-x := x + 25;
+x := x + Scale;
+y := y;
 end;
 2: begin 
 x := x;
-y := y + 50;
+y := y + Scale;
 end;
 3: begin 
-x := x + 25;
+x := x + Scale;
+y := y;
 end;
 4: begin 
 x := x;
-y := y - 50;
+y := y - Scale;
 end;
 end;
 n := n + 1;
