@@ -9,7 +9,7 @@ type
         Link : ptr;
     end;
 var 
-    CoordX,CoordY,n: integer; // Координаты какой-то начальной точки
+    Scale,CoordX,CoordY,n: integer; // Координаты какой-то начальной точки
     Depth : byte; // Глубина отрисовки
 
 // Добавляет следующую точку и ставит на неё указатель
@@ -63,5 +63,8 @@ x := x;
 y := y - 50;
 end;
 end;
+n := n + 1;
+addNew(p);
+if n > 4 then n := 0;
 end;
 end.
