@@ -21,6 +21,7 @@ procedure calcDot;
 implementation
 var x,y : integer;
     p,sp,tmp : ptr; // указатель и стартовая позиция, откуда начинает рисоваться фрактал
+    positions : array [0..7] of ptr; // массив, состоящий из стандартных позиций 1-ого порядка
 procedure addNew(var current : ptr);
 var next: ptr;
 begin
@@ -29,6 +30,17 @@ begin
     next^.CoordY := y;
     current^.Link := next;
     current := next;
+end;
+// Процедура, заполняющая позиции 1-ого порядка
+procedure FillPositions;
+var i : integer;
+begin
+for i := 0 to 7 do new(positions[i]);
+// 1-ая позиция
+positions[0]^.CoordX := 0;
+positions[0]^.CoordY := -50*Scale;
+addNew(positions[0]);
+
 end;
 procedure IntFrac;
 begin
@@ -39,34 +51,34 @@ begin
     y := CoordY;
     p^.CoordX := x;
     p^.CoordY := y;
-    n := 0; Scale := 1;
+    n := 0; Scale := 2;
     
 end;
 
 // Рекурсивная функция, выщитывающая точки
 procedure calcDot;
 begin
-// Спасибо паша - помог
+
 case n of 
 0: begin 
-x := x ;
-y := y - 50*Scale ;
+x := 0 ;
+y :=  -50*Scale ;
 end;
 1: begin 
-x := x + 25*Scale  ;
-y := y ; 
+x :=  25*Scale  ;
+y := 0 ; 
 end;
 2: begin 
-x := x ;
-y := y + 50*Scale;
+x := 0 ;
+y :=  50*Scale;
 end;
 3: begin 
-x := x + 25*Scale;
-y := y;
+x :=  25*Scale;
+y := 0;
 end;
 4: begin 
-x := x;
-y := y - 50*Scale;
+x := 0;
+y := -50*Scale;
 end;
 end;
 n := n + 1;

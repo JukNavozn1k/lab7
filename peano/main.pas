@@ -32,10 +32,19 @@ for i := 1 to 100 do  calcDot;
 getPtr; 
 // ===============================
 getPtr;
-LineTo(CoordX,CoordY);
+LineRel(CoordX,CoordY);
+getPtr;
+LineRel(CoordX,CoordY);
+getPtr;
+LineRel(CoordX,CoordY);
+getPtr;
+LineRel(CoordX,CoordY);
+getPtr;
+LineRel(CoordX,CoordY);
 
 
-readln();
+
+
 end;
 procedure IntGraph;
 
