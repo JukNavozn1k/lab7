@@ -3,95 +3,89 @@ unit frac;
 interface 
 uses math;
 type 
-    ptr = ^Dot;
-    Dot = record
-        CoordX,CoordY : integer;
+    ptr = ^peano_array;
+    
+    peano_array = record
+        px,py : array [0..5] of integer ;
         Link : ptr;
+        start_pos : ptr;
     end;
 var 
-    Scale,CoordX,CoordY,n: integer; // Координаты какой-то начальной точки
-    Depth : byte; // Глубина отрисовки
+    Depth,Scale,dirX,dirY,direction: integer;
+    p : ptr;
+    
 
-// Добавляет следующую точку и ставит на неё указатель
-procedure addNew(var current: ptr);
-procedure getPtr; // получить следующую точку,нужную для отрисовки
-// Процедура инициализации фрактала, в данных точках CoordX,CoordY
+
 procedure IntFrac;
-procedure calcDot;
+
 implementation
-var x,y : integer;
-    p,sp,tmp : ptr; // указатель и стартовая позиция, откуда начинает рисоваться фрактал
-    positions : array [0..7] of ptr; // массив, состоящий из стандартных позиций 1-ого порядка
-procedure addNew(var current : ptr);
-var next: ptr;
-begin
-    new(next);
-    next^.CoordX := x;
-    next^.CoordY := y;
-    current^.Link := next;
-    current := next;
-end;
-// Процедура, заполняющая позиции 1-ого порядка
-procedure FillPositions;
-var i : integer;
-begin
-for i := 0 to 7 do new(positions[i]);
-// 1-ая позиция
-positions[0]^.CoordX := 0;
-positions[0]^.CoordY := -50*Scale;
-addNew(positions[0]);
 
-end;
-procedure IntFrac;
+procedure add;
+var tmp : ptr;
 begin
-    new(p); // создание нового объекта, который находится по адрессу p
-    sp := p; // копирование стартовой позиции для извлечения значений
-    tmp := sp;
-    x := CoordX;
-    y := CoordY;
-    p^.CoordX := x;
-    p^.CoordY := y;
-    n := 0; Scale := 2;
+new(tmp);
+tmp^.start_pos := p^.start_pos;
+p^.Link := tmp;
+p := tmp;
+end;
+procedure peano();
+begin
+    p^.px[1] := 0;
+    p^.py[1] := 2*Scale*dirY;
+
+    p^.px[2] := 1*Scale*dirX;
+    p^.py[2] := 0;
+  
+
+    p^.px[3] := 0;
+    p^.py[3] := -2*Scale*dirY;
+
+    p^.px[4] := 1*Scale*dirX;
+    p^.py[4] := 0;
+
+    p^.px[5] := 0;
+    p^.py[5] := 2*Scale*dirY;
+    add;
     
 end;
 
-// Рекурсивная функция, выщитывающая точки
-procedure calcDot;
+procedure calculate_curve(d,i: integer);
 begin
 
-case n of 
-0: begin 
-x := 0 ;
-y :=  -50*Scale ;
-end;
-1: begin 
-x :=  25*Scale  ;
-y := 0 ; 
-end;
-2: begin 
-x := 0 ;
-y :=  50*Scale;
-end;
-3: begin 
-x :=  25*Scale;
-y := 0;
-end;
-4: begin 
-x := 0;
-y := -50*Scale;
-end;
-end;
-n := n + 1;
-if n > 4 then n := 0;  
 
-addNew(p);
 
+ if (i > 3)  then begin
+
+ p^.px[0] := 1*Scale*direction;
+ p^.py[0] := 0;
+ dirY := dirY * -1;
+if i = 4 then direction := direction * -1;
+ 
+ i := 1;
+ end
+ else if  (i <= 3)  then  begin
+ p^.px[0] := 0;
+ p^.py[0] := 1*Scale*direction;
+dirX := dirX * -1;
+ end;
+ 
+
+peano;
+
+//
+ if d > 1 then calculate_curve(d-1,i+1);
 end;
-procedure getPtr;
-var i : integer;
+
+procedure IntFrac;
 begin
-    CoordX := tmp^.CoordX; CoordY := tmp^.CoordY;
-    tmp := tmp^.Link;
+    new(p); // создание нового объекта, который находится по адрессу p 
+    p^.start_pos := p;
+    Scale := 25; Depth := 1; direction := 1; 
+    dirX := -1;
+    dirY := 1;
+    calculate_curve(1,1);
   
 end;
+
+
 end.

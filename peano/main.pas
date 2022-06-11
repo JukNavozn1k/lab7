@@ -7,6 +7,7 @@ const
 var     menu:array[1..n] of string;
         point,x,y,i,gd,gm: integer;
         ch,winch: char; 
+        isGood : boolean;
 
 
 
@@ -21,40 +22,65 @@ begin
         write('Нажмите клавишу <Enter> для выходв в главное меню ');
         readln;
 end;
-
-procedure graph;
-var i : integer;
+procedure print_curve;
+var i : ptr;
+    j : integer;
 begin
-MoveTo(CoordX,CoordY); // перемещает курсор в центр экрана, очень полезная вещь
-{LineRel(0,250); // Движет линию на какой-то вектор, относительно предыдущей позиции
-LineRel(-250,0); }
-for i := 1 to 100 do  calcDot;
-getPtr; 
-// ===============================
-getPtr;
-LineRel(CoordX,CoordY);
-getPtr;
-LineRel(CoordX,CoordY);
-getPtr;
-LineRel(CoordX,CoordY);
-getPtr;
-LineRel(CoordX,CoordY);
-getPtr;
-LineRel(CoordX,CoordY);
-
-
-
-
+if p <> nil then begin
+i := p^.start_pos;
+while i^.Link  <> nil do begin
+for j := 0 to 5 do begin
+        LineRel(i^.px[j],i^.py[j]);
 end;
+i := i^.Link;
+end;
+end;
+end;
+procedure graph;
+        var DS,SS : string;
+begin
+        winch:=' ';
+        MoveTo(GetMaxX,GetMaxY);
+        while isGood do
+        begin
+                // CLEAR 
+               str(Depth,DS);
+               str(Scale,SS); 
+               ClearDevice;
+                // OutInfo
+                OutTextXY(100,100,'1 -> Depth + 1');
+                OutTextXY(100,120,'2 -> Scale + 1');
+                OutTextXY(100,140,'ESC -> Back to menu');
+                OutTextXY(100,180,'Depth: ' + DS);
+                OutTextXY(100,200,'Scale: ' + SS);
+                SetColor(15);
+                // print_curve
+                MoveTo(GetMaxX div 2,GetMaxY div 2);
+                if p <> nil then print_curve;
+                // HOT-KEYS
+                winch:=wincrt.readkey;
+                case winch of
+                #27: isGood := false;
+                '1' : Depth := Depth + 1;
+                '2' : Scale := Scale + 1;
+                end;
+               
+               
+        end;
+        
+        CloseGraph;
+        
+        
+end;
+
 procedure IntGraph;
 
 begin
 
-        
+        isGood := true;
         gd:=detect;gm:=0;
         InitGraph(gd, gm, '');
-        CoordX := GetMaxX div 2;
-        CoordY := GetMaxY div 2;
+       
         IntFrac;
         graph;
         
